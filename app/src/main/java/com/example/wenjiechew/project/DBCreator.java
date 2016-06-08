@@ -1,4 +1,4 @@
-package com.example.wenjiechew.project.Database;
+package com.example.wenjiechew.project;
 
 /**
  * Created by WenJieChew on 8/6/2016.

@@ -1,4 +1,4 @@
-package com.example.wenjiechew.project.Database;
+package com.example.wenjiechew.project;
 
 /**
  * Created by WenJieChew on 9/6/2016.
@@ -36,7 +36,7 @@ public class DBAccess {
      * private Constructor to avoid object creation outside of class
      * @param context
      */
-    private DBAccess(Context context) { this.openHelper = new DBHandler(context); }
+    private DBAccess(Context context) { this.openHelper = new DBCreator(context); }
 
     /**
      *
