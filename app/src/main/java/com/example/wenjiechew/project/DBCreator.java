@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 
-public class DBCreater extends SQLiteOpenHelper{
+public class DBCreator extends SQLiteOpenHelper{
 
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "Hotspot.db";
@@ -17,7 +17,7 @@ public class DBCreater extends SQLiteOpenHelper{
     public static final String COL_PLACENAME = "placeName";
 
     //Constructor
-    public DBCreater(Context context) {
+    public DBCreator(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
