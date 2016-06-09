@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
                 View customView = inflater.inflate(R.layout.custom_additinenarylist_layout, null);
 
                 //Define datepicker
-                //final DatePicker datePicker = (DatePicker) customView.findViewById(R.id.datePicker);
                 final EditText listEditText = (EditText) customView.findViewById(R.id.listEditText);
                 final EditText datePickerText = (EditText) customView.findViewById(R.id.txtdate);
 
@@ -80,11 +79,6 @@ public class MainActivity extends AppCompatActivity {
                         places.set_placeName(listEditText.getText().toString());
 
                         //// TODO: 9/6/2016 TO DO THE DATE TO UPLOAD TO DB
-//                        year = datePicker.getYear();
-//                        month = datePicker.getMonth();
-//                        day = datePicker.getDayOfMonth();
-
-
                         dbAccess.openWrite();
                         dbAccess.Insert(dbAccess.TABLENAME_PLACE, places);
                         dbAccess.close();
