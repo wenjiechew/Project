@@ -2,7 +2,7 @@
     <string name="app_name">Project</string>
     <string name="action_settings">Settings</string>
 
-    <string name="createList">New Itinerary List</string>
+    <string name="listName">Enter List Name ...</string>
 
 
 </resources>
