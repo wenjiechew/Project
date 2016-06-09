@@ -20,13 +20,14 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Place name ..."
-            android:id="@+id/placeNameText"
             android:layout_marginLeft="26dp"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+
+            android:id="@+id/placeNameText"/>
 
 
         <TextView
@@ -34,12 +35,11 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Date ..."
-            android:id="@+id/dateText"
-
-
             android:layout_below="@+id/placeNameText"
             android:layout_alignLeft="@+id/placeNameText"
-            android:layout_alignStart="@+id/placeNameText" />
+            android:layout_alignStart="@+id/placeNameText"
+
+            android:id="@+id/dateText"/>
 
         <ImageView
             android:layout_width="wrap_content"
