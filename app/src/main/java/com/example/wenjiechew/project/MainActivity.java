@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     private String TAG = "ListView";
 
     private int year, month, day;
-    private static Button date;
 
     private String listName;
 
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //Inflating custom layout
                 LayoutInflater inflater = (LayoutInflater) getLayoutInflater();
-                View customView = inflater.inflate(R.layout.custom_additinenarylist_layout, null);
+                View customView = inflater.inflate(R.layout.custom_additinenarylist_dialog_layout, null);
 
                 //Define datepicker
                 final EditText listEditText = (EditText) customView.findViewById(R.id.listEditText);
