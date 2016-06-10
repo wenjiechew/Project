@@ -15,6 +15,7 @@ public class DBCreator extends SQLiteOpenHelper{
     public static final String TABLENAME_PLACE = "place";
     public static final String COL_ID = "_id";
     public static final String COL_PLACENAME = "placeName";
+    public static final String COL_LISTDATE = "listdate";
 
     //Constructor
     public DBCreator(Context context) {
@@ -25,7 +26,8 @@ public class DBCreator extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLENAME_PLACE + "(" +
                 COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COL_PLACENAME + " TEXT" +
+                COL_PLACENAME + " TEXT, " +
+                COL_LISTDATE + " TEXT" +
                 ");";
 
         db.execSQL(query);

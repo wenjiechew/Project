@@ -20,13 +20,14 @@ public class DBAccess {
     private SQLiteDatabase database;
     private static DBAccess instance;
 
-    public static final String TABLENAME_PLACE = "place";
-
     private static final String SELECTALL_CMD = "SELECT * FROM ";
     private static final String DELECTFROM_CMD = "DELETE FROM ";
 
+    public static final String TABLENAME_PLACE = "place";
+
     public static final String COL_ID = "_id";
     public static final String COL_PLACENAME = "placeName";
+    public static final String COL_LISTDATE = "listdate";
 
     public static final String[] PLACE_LIST_COL_TO_DISPLAY = {COL_PLACENAME};
 
@@ -66,10 +67,14 @@ public class DBAccess {
         Log.d(TAG, "In insert function");
 
         if(tableName.equals(TABLENAME_PLACE)) {
-            Log.d(TAG, "insert " + hotspot.get_placeName() + " into " + TABLENAME_PLACE);
+            Log.d(TAG, "insert " +
+                    hotspot.get_placeName() + " " +
+                    hotspot.get_date() +
+                    " into " + TABLENAME_PLACE);
 
             ContentValues values = new ContentValues();
             values.put(COL_PLACENAME, hotspot.get_placeName());
+            values.put(COL_LISTDATE, hotspot.get_date());
 
             database.insert(TABLENAME_PLACE, null, values);
         }

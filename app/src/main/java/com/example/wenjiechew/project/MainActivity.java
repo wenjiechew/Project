@@ -97,7 +97,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Places places = new Places();
+
                         places.set_placeName(listEditText.getText().toString());
+                        places.set_date(datePickerText.getText().toString());
 
                         //// TODO: 9/6/2016 TO DO THE DATE TO UPLOAD TO DB
                         dbAccess.openWrite();

@@ -43,14 +43,13 @@ public class Places {
     public String get_date() { return _date; }
 
 
-
-
     public List<Places> getAllPlaces(DBAccess instance){
         List<Places> list = new ArrayList<>();
         Cursor c = instance.SelectAll(instance.TABLENAME_PLACE);
         while (c.moveToNext()){
             String placeName = c.getString(c.getColumnIndex(instance.COL_PLACENAME));
-            Places places = new Places(placeName,null);
+            String dateText = c.getString(c.getColumnIndex(instance.COL_LISTDATE));
+            Places places = new Places(placeName,dateText);
             list.add(places);
         }
 
