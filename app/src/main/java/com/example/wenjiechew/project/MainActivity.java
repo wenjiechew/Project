@@ -4,11 +4,14 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,8 +21,12 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.SimpleCursorAdapter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity {
     private String TAG = "ListView";
@@ -29,7 +36,11 @@ public class MainActivity extends AppCompatActivity {
     private String listName;
 
     private DBAccess dbAccess;
+    RecyclerView recyclerView;
+    RecyclerListAdapter recyclerListAdapter;
 
+    private List<Places> placesList;
+    private Places places = new Places();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +51,18 @@ public class MainActivity extends AppCompatActivity {
 
         dbAccess = DBAccess.getInstance(this);
 
+
+
+        //Recycler View Initialisation
+        recyclerView = (RecyclerView) findViewById(R.id.rv);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        FillRVList();
+
+
+
+        final LayoutInflater inflater = (LayoutInflater) getLayoutInflater();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG,"add fab button");
 
                 //Inflating custom layout
-                LayoutInflater inflater = (LayoutInflater) getLayoutInflater();
                 View customView = inflater.inflate(R.layout.custom_additinenarylist_dialog_layout, null);
 
                 //Define datepicker
@@ -125,4 +147,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void FillRVList(){
+        Log.d(TAG, "Filling list");
+
+        dbAccess.openRead();
+        placesList = places.getAllPlaces(dbAccess);
+        dbAccess.close();
+
+        recyclerListAdapter = new RecyclerListAdapter(placesList);
+        recyclerView.setAdapter(recyclerListAdapter);
+    }
 }
