@@ -8,23 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Collections;
 import java.util.List;
 
 
 /**
  * Created by WenJieChew on 10/6/2016.
  */
-public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapter.PlacesViewHolder>{
+public class RecyclerListAdapter extends
+        RecyclerView.Adapter<RecyclerListAdapter.PlacesViewHolder> implements
+        ItemTouchHelperAdapter {
 
     private List<Places> places;
 
     public RecyclerListAdapter(List<Places> places){
         this.places = places;
-    }
-
-    @Override
-    public int getItemCount() {
-        return places.size();
     }
 
     public static class PlacesViewHolder extends RecyclerView.ViewHolder{
@@ -40,6 +38,12 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
         }
     }
 
+
+    @Override
+    public int getItemCount() {
+        return places.size();
+    }
+
     @Override
     public PlacesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -53,6 +57,20 @@ public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapte
         Places item = places.get(position);
         holder.placeName.setText(item.get_placeName());
         holder.date.setText(item.get_date());
+    }
+
+
+    @Override
+    public void onItemDismiss(int position) {
+        places.remove(position);
+        notifyItemChanged(position);
+    }
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        Collections.swap(places, fromPosition, toPosition);
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
     }
 
     @Override

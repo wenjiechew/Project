@@ -15,9 +15,10 @@ public class Places {
 
     public Places(){}
 
-    public Places(String placeName, String date){
+    public Places(String placeName, String date, int id){
         this._placeName = placeName;
         this._date = date;
+        this._id = id;
     }
 
     public void set_id(int _id){
@@ -47,7 +48,8 @@ public class Places {
         while (c.moveToNext()){
             String placeName = c.getString(c.getColumnIndex(instance.COL_PLACENAME));
             String dateText = c.getString(c.getColumnIndex(instance.COL_LISTDATE));
-            Places places = new Places(placeName,dateText);
+            int id = c.getInt(c.getColumnIndex(instance.COL_ID));
+            Places places = new Places(placeName,dateText, id);
             list.add(places);
         }
 

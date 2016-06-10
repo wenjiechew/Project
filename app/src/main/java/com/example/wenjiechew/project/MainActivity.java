@@ -32,11 +32,17 @@ public class MainActivity extends AppCompatActivity {
     private String TAG = "ListView";
 
     private DBAccess dbAccess;
+
+
     RecyclerView recyclerView;
     RecyclerListAdapter recyclerListAdapter;
 
+
+
     private List<Places> placesList;
     private Places places = new Places();
+
+    private LayoutInflater inflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,17 +53,12 @@ public class MainActivity extends AppCompatActivity {
 
         dbAccess = DBAccess.getInstance(this);
 
-
-
         //Recycler View Initialisation
         recyclerView = (RecyclerView) findViewById(R.id.rv);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        FillRVList();
 
-
-
-        final LayoutInflater inflater = (LayoutInflater) getLayoutInflater();
+        inflater = getLayoutInflater();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -119,13 +120,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        FillRVList();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -147,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     private void FillRVList(){
         Log.d(TAG, "Filling list");
 
@@ -156,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
         dbAccess.close();
 
         recyclerListAdapter = new RecyclerListAdapter(placesList);
+//        String test = String.valueOf(placesList.get(1).get_id());
+//        Log.d(TAG, test);
         recyclerView.setAdapter(recyclerListAdapter);
     }
 }
