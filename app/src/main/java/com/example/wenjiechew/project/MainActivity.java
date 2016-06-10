@@ -31,10 +31,6 @@ import java.util.StringTokenizer;
 public class MainActivity extends AppCompatActivity {
     private String TAG = "ListView";
 
-    private int year, month, day;
-
-    private String listName;
-
     private DBAccess dbAccess;
     RecyclerView recyclerView;
     RecyclerListAdapter recyclerListAdapter;
@@ -72,11 +68,11 @@ public class MainActivity extends AppCompatActivity {
                 //Inflating custom layout
                 View customView = inflater.inflate(R.layout.custom_additinenarylist_dialog_layout, null);
 
-                //Define datepicker
+                //Define datepicker and listName
                 final EditText listEditText = (EditText) customView.findViewById(R.id.listEditText);
                 final EditText datePickerText = (EditText) customView.findViewById(R.id.txtdate);
 
-               datePickerText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                datePickerText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                    @Override
                    public void onFocusChange(View v, boolean hasFocus) {
                        if(hasFocus){
@@ -85,9 +81,7 @@ public class MainActivity extends AppCompatActivity {
                            dialog.show(ft,"DatePicker");
                        }
                    }
-               });
-
-
+                });
 
                 //Build Dialog
                 AlertDialog.Builder buider = new AlertDialog.Builder(MainActivity.this);
@@ -101,10 +95,12 @@ public class MainActivity extends AppCompatActivity {
                         places.set_placeName(listEditText.getText().toString());
                         places.set_date(datePickerText.getText().toString());
 
-                        //// TODO: 9/6/2016 TO DO THE DATE TO UPLOAD TO DB
                         dbAccess.openWrite();
                         dbAccess.Insert(dbAccess.TABLENAME_PLACE, places);
                         dbAccess.close();
+
+                        FillRVList();
+
 
 
                     }
@@ -118,12 +114,15 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 buider.create().show();
-
-
-
-
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        FillRVList();
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.example.wenjiechew.project;
 import android.database.Cursor;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,7 +18,6 @@ public class Places {
     public Places(String placeName, String date){
         this._placeName = placeName;
         this._date = date;
-
     }
 
     public void set_id(int _id){
