@@ -27,7 +27,7 @@ public class DBAccess {
     public static final String COL_PLACENAME = "placeName";
     public static final String COL_LISTDATE = "listdate";
 
-    public static final String[] PLACE_LIST_COL_TO_DISPLAY = {COL_PLACENAME};
+    public static final String[] PLACE_LIST_COL_TO_DISPLAY = {COL_ID, COL_PLACENAME, COL_LISTDATE};
 
 
 
@@ -59,6 +59,10 @@ public class DBAccess {
 
     public Cursor SelectAll(String tableName) {
         return database.rawQuery(SELECTALL_CMD + tableName, null);
+    }
+
+    public Cursor SelectOne(String tableName) {
+        return database.rawQuery(tableName, PLACE_LIST_COL_TO_DISPLAY );
     }
 
     public void Insert(String tableName, Places hotspot){

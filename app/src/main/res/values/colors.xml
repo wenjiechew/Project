@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="posNumber">#FFFFFF</color>
+    <color name="list_item_background">#AACCCCCC</color>
+
+    <color name="app_color">#8EAE3C</color>
 </resources>

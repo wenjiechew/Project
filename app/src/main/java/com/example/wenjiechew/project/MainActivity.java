@@ -1,48 +1,59 @@
 package com.example.wenjiechew.project;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.FragmentTransaction;
+
 import android.content.DialogInterface;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+
+
+import android.support.v4.content.ContextCompat;
+
+
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.support.v7.widget.Toolbar;
+
 import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.SimpleCursorAdapter;
 
-import java.util.ArrayList;
-import java.util.Date;
+import android.widget.Toast;
+
+
 import java.util.List;
-import java.util.StringTokenizer;
+
+import com.woxthebox.draglistview.DragItem;
+import com.woxthebox.draglistview.DragListView;
+import com.example.wenjiechew.project.MySwipeRefreshLayout;
+
 
 public class MainActivity extends AppCompatActivity {
     private String TAG = "ListView";
 
     private DBAccess dbAccess;
-
-
-    RecyclerView recyclerView;
-    RecyclerListAdapter recyclerListAdapter;
-
-
-
-    private List<Places> placesList;
     private Places places = new Places();
 
+    private List<Places> placesList;
+    private DragListView mDragListView;
+    private MySwipeRefreshLayout mRefreshLayout;
+
+
+
+
     private LayoutInflater inflater;
+
+    PlacesAdapter listAdapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +61,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+//
+        //Initialise Datebase Access Instance
         dbAccess = DBAccess.getInstance(this);
 
-        //Recycler View Initialisation
-        recyclerView = (RecyclerView) findViewById(R.id.rv);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //Initialise ListView
+
+        mDragListView = (DragListView) findViewById(R.id.drag_list_view);
+        mDragListView.getRecyclerView().setVerticalScrollBarEnabled(true);
+        mDragListView.setDragListListener(new DragListView.DragListListenerAdapter() {
+            @Override
+            public void onItemDragStarted(int position) {
+                Toast.makeText(mDragListView.getContext(), "Start - position: " + position, Toast.LENGTH_SHORT).show();
+            }
+
+
+            @Override
+            public void onItemDragEnded(int fromPosition, int toPosition) {
+                if (fromPosition != toPosition) {
+                    Toast.makeText(mDragListView.getContext(), "End - position: " + toPosition, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        setupListRecyclerView();
 
         inflater = getLayoutInflater();
 
@@ -100,9 +127,6 @@ public class MainActivity extends AppCompatActivity {
                         dbAccess.Insert(dbAccess.TABLENAME_PLACE, places);
                         dbAccess.close();
 
-                        FillRVList();
-
-
 
                     }
 
@@ -118,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -141,6 +167,18 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void setupListRecyclerView() {
+
+        FillRVList();
+
+        mDragListView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        listAdapter = new PlacesAdapter(placesList, R.layout.custom_itinenarylist_layout, R.id.holder2, false);
+        mDragListView.setAdapter(listAdapter, true);
+        mDragListView.setCanDragHorizontally(false);
+
+       // mDragListView.setCustomDragItem(new MyDragItem(MainActivity.this), R.layout.custom_itinenarylist_layout));
+    }
+
     private void FillRVList(){
         Log.d(TAG, "Filling list");
 
@@ -148,9 +186,10 @@ public class MainActivity extends AppCompatActivity {
         placesList = places.getAllPlaces(dbAccess);
         dbAccess.close();
 
-        recyclerListAdapter = new RecyclerListAdapter(placesList);
-//        String test = String.valueOf(placesList.get(1).get_id());
-//        Log.d(TAG, test);
-        recyclerView.setAdapter(recyclerListAdapter);
+        Log.d(TAG, placesList.get(0).get_placeName());
+
     }
+
+
+
 }

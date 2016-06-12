@@ -9,19 +9,19 @@ import java.util.List;
  * Created by WenJieChew on 9/6/2016.
  */
 public class Places {
-    private int _id;
+    private Long _id;
     private String _placeName;
     private String  _date;
 
     public Places(){}
 
-    public Places(String placeName, String date, int id){
+    public Places(String placeName, String date, Long id){
         this._placeName = placeName;
         this._date = date;
         this._id = id;
     }
 
-    public void set_id(int _id){
+    public void set_id(Long _id){
         this._id = _id;
     }
 
@@ -33,7 +33,7 @@ public class Places {
 
 
 
-    public int get_id(){ return _id; }
+    public Long get_id(){ return _id; }
 
     public String get_placeName(){
         return _placeName;
@@ -48,11 +48,15 @@ public class Places {
         while (c.moveToNext()){
             String placeName = c.getString(c.getColumnIndex(instance.COL_PLACENAME));
             String dateText = c.getString(c.getColumnIndex(instance.COL_LISTDATE));
-            int id = c.getInt(c.getColumnIndex(instance.COL_ID));
+            Long id = c.getLong(c.getColumnIndex(instance.COL_ID));
             Places places = new Places(placeName,dateText, id);
             list.add(places);
         }
 
         return list;
     }
+
+
+
+
 }
