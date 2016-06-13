@@ -24,19 +24,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import android.widget.Toast;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.woxthebox.draglistview.DragItem;
 import com.woxthebox.draglistview.DragListView;
-import com.example.wenjiechew.project.MySwipeRefreshLayout;
 
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements SwipeActionAdapter.SwipeActionListener {
     private String TAG = "ListView";
 
     private DBAccess dbAccess;
@@ -44,9 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<Places> placesList;
     private DragListView mDragListView;
-    private MySwipeRefreshLayout mRefreshLayout;
-
-
+    protected SwipeActionAdapter mAdapter;
 
 
     private LayoutInflater inflater;
@@ -169,17 +168,28 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupListRecyclerView() {
 
-        FillRVList();
+        FillPlaceList();
 
         mDragListView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         listAdapter = new PlacesAdapter(placesList, R.layout.custom_itinenarylist_layout, R.id.holder2, false);
         mDragListView.setAdapter(listAdapter, true);
         mDragListView.setCanDragHorizontally(false);
 
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(
+                this,
+                R.layout.row_bg,
+                R.id.text,
+                listAdapter
+        );
+
+        mAdapter = new SwipeActionAdapter(stringArrayAdapter);
+
+
+
        // mDragListView.setCustomDragItem(new MyDragItem(MainActivity.this), R.layout.custom_itinenarylist_layout));
     }
 
-    private void FillRVList(){
+    private void FillPlaceList(){
         Log.d(TAG, "Filling list");
 
         dbAccess.openRead();
@@ -189,6 +199,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, placesList.get(0).get_placeName());
 
     }
+
+
 
 
 
